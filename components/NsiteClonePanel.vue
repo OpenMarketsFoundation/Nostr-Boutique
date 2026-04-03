@@ -160,41 +160,41 @@ const runNewcomerFlow = async () => {
     </button>
   </div>
 
-  <div v-if="existingError" class="mx-auto mt-4 max-w-xl border border-red-500/40 px-4 py-3 text-sm text-red-500">
+  <div v-if="existingError" class="mx-auto mt-4 max-w-xl border px-4 py-3 text-sm text-white" :style="{ borderColor: '#000', background: '#000' }">
     {{ existingError }}
   </div>
 
-  <div v-if="mode === 'existing-success'" class="mx-auto mt-4 max-w-xl border px-4 py-3 text-sm" :style="{ borderColor: 'var(--line)' }">
+  <div v-if="mode === 'existing-success'" class="mx-auto mt-4 max-w-xl border px-4 py-3 text-sm text-white" :style="{ borderColor: '#000', background: '#000' }">
     <p class="font-bold">Clone published with your key.</p>
     <a class="mt-2 inline-block underline" :href="existingSuccessUrl" target="_blank" rel="noopener noreferrer">{{ existingSuccessUrl }}</a>
   </div>
 
-  <div v-if="mode === 'new' || mode === 'new-success'" class="mx-auto mt-6 max-w-xl border p-4" :style="{ borderColor: 'var(--line)' }">
+  <div v-if="mode === 'new' || mode === 'new-success'" class="mx-auto mt-6 max-w-xl border p-4" :style="{ borderColor: '#000', background: '#000', color: '#fff' }">
     <p class="text-sm font-bold">Clone source</p>
-    <p class="mt-1 break-all text-xs" :style="{ color: 'var(--muted)' }">{{ sourceNpub }}</p>
+    <p class="mt-1 break-all text-xs" :style="{ color: 'rgba(255,255,255,0.85)' }">{{ sourceNpub }}</p>
 
-    <label class="mt-4 block text-xs font-bold uppercase tracking-[0.08em]" :style="{ color: 'var(--muted)' }">Display name</label>
+    <label class="mt-4 block text-xs font-bold uppercase tracking-[0.08em]" :style="{ color: 'rgba(255,255,255,0.85)' }">Display name</label>
     <input
       v-model="newcomerName"
       type="text"
       placeholder="Sovereign Shop Owner"
       class="mt-2 w-full border px-3 py-2 text-sm outline-none"
-      :style="{ borderColor: 'var(--line)', background: 'var(--bg)', color: 'var(--text)' }"
+      :style="{ borderColor: '#fff', background: '#000', color: '#fff' }"
     >
 
     <div class="mt-3 flex flex-wrap gap-2">
-      <button class="border px-3 py-2 text-xs font-bold" :style="{ borderColor: 'var(--line)' }" @click="generateNewcomerKeys">
+      <button class="border px-3 py-2 text-xs font-bold" :style="{ borderColor: '#fff', color: '#fff' }" @click="generateNewcomerKeys">
         Generate my keys
       </button>
     </div>
 
-    <div v-if="newcomerIdentity" class="mt-4 border p-3 text-xs" :style="{ borderColor: 'var(--line)' }">
+    <div v-if="newcomerIdentity" class="mt-4 border bg-black p-3 text-xs text-white" :style="{ borderColor: '#fff' }">
       <p class="font-bold">Back up these keys now.</p>
       <p class="mt-2 break-all"><span class="font-bold">npub:</span> {{ newcomerIdentity.npub }}</p>
       <p class="mt-1 break-all"><span class="font-bold">nsec:</span> {{ newcomerIdentity.nsec }}</p>
       <div class="mt-2 flex flex-wrap gap-2">
-        <button class="border px-2 py-1" :style="{ borderColor: 'var(--line)' }" @click="copyText(newcomerIdentity.npub)">Copy npub</button>
-        <button class="border px-2 py-1" :style="{ borderColor: 'var(--line)' }" @click="copyText(newcomerIdentity.nsec)">Copy nsec</button>
+        <button class="border px-2 py-1" :style="{ borderColor: '#fff', color: '#fff' }" @click="copyText(newcomerIdentity.npub)">Copy npub</button>
+        <button class="border px-2 py-1" :style="{ borderColor: '#fff', color: '#fff' }" @click="copyText(newcomerIdentity.nsec)">Copy nsec</button>
       </div>
       <label class="mt-3 flex items-center gap-2">
         <input v-model="newcomerConfirmed" type="checkbox">
@@ -210,9 +210,9 @@ const runNewcomerFlow = async () => {
       </button>
     </div>
 
-    <p v-if="newcomerError" class="mt-3 text-xs text-red-500">{{ newcomerError }}</p>
+    <p v-if="newcomerError" class="mt-3 border px-3 py-2 text-xs text-white" :style="{ borderColor: '#fff', background: '#000' }">{{ newcomerError }}</p>
 
-    <div v-if="mode === 'new-success'" class="mt-4 border p-3 text-xs" :style="{ borderColor: 'var(--line)' }">
+    <div v-if="mode === 'new-success'" class="mt-4 border p-3 text-xs" :style="{ borderColor: '#fff' }">
       <p class="font-bold">Your new nsite is live.</p>
       <a class="mt-2 inline-block underline" :href="newcomerSuccessUrl" target="_blank" rel="noopener noreferrer">{{ newcomerSuccessUrl }}</a>
     </div>
