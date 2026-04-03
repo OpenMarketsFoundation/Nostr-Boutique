@@ -1,7 +1,7 @@
 <script setup>
 const exampleRunUrl = 'https://npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6.nsite.run/'
 const exampleLolUrl = 'https://npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6.nsite.lol/'
-const previewTarget = ref('run')
+const previewTarget = ref('lol')
 
 const previewUrl = computed(() => {
   return previewTarget.value === 'lol' ? exampleLolUrl : exampleRunUrl
