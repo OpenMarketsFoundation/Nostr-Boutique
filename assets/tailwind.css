@@ -93,8 +93,12 @@ a {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-:root[data-theme='dark'] .brand-logo {
+:root[data-theme='dark'] .brand-logo--invert {
   filter: invert(1);
+}
+
+:root[data-theme='dark'] .hero-panel {
+  color: #000;
 }
 
 @keyframes fade-in-up {

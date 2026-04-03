@@ -24,7 +24,7 @@ const handleLogoError = () => {
       v-if="logoSrc"
       :src="logoSrc"
       alt="Nostr Boutique"
-      :class="props.compact ? 'brand-logo h-9 w-auto' : 'brand-logo h-32 w-auto sm:h-40'"
+      :class="props.compact ? 'brand-logo brand-logo--invert h-9 w-auto' : 'brand-logo h-32 w-auto sm:h-40'"
       @error="handleLogoError"
     >
     <div v-else class="inline-flex flex-col leading-none">
