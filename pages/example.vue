@@ -1,5 +1,11 @@
 <script setup>
-const exampleUrl = 'https://npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6.nsite.run'
+const exampleRunUrl = 'https://npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6.nsite.run/'
+const exampleLolUrl = 'https://npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6.nsite.lol/'
+const previewTarget = ref('run')
+
+const previewUrl = computed(() => {
+  return previewTarget.value === 'lol' ? exampleLolUrl : exampleRunUrl
+})
 
 useSeoMeta({
   title: 'Example | Nostr Boutique',
@@ -19,12 +25,21 @@ useSeoMeta({
 
       <div class="mt-6 grid gap-3">
         <a
-          :href="exampleUrl"
+          :href="exampleRunUrl"
           target="_blank"
           rel="noopener noreferrer"
           class="cta-primary inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-black"
         >
           Open live example
+        </a>
+        <a
+          :href="exampleLolUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center rounded-full border px-5 py-2.5 text-sm font-bold"
+          :style="{ borderColor: 'var(--line)' }"
+        >
+          Open via nsite.lol
         </a>
         <NuxtLink to="/explore" class="inline-flex items-center justify-center rounded-full border px-5 py-2.5 text-sm font-bold" :style="{ borderColor: 'var(--line)' }">
           Explore related Nsites
@@ -32,24 +47,41 @@ useSeoMeta({
       </div>
 
       <div class="mt-6 panel">
-        <p class="text-xs font-extrabold uppercase tracking-[0.1em]" :style="{ color: 'var(--muted)' }">URL</p>
-        <p class="mt-2 break-all text-sm">{{ exampleUrl }}</p>
+        <p class="text-xs font-extrabold uppercase tracking-[0.1em]" :style="{ color: 'var(--muted)' }">URL (.nsite.run)</p>
+        <p class="mt-2 break-all text-sm">{{ exampleRunUrl }}</p>
+        <p class="mt-4 text-xs font-extrabold uppercase tracking-[0.1em]" :style="{ color: 'var(--muted)' }">URL (.nsite.lol)</p>
+        <p class="mt-2 break-all text-sm">{{ exampleLolUrl }}</p>
+
+        <div class="mt-4 grid gap-2 sm:grid-cols-2">
+          <button
+            class="border px-3 py-2 text-left text-xs font-bold"
+            :style="previewTarget === 'run' ? { borderColor: 'var(--text)', background: 'var(--text)', color: 'var(--bg)' } : { borderColor: 'var(--line)', color: 'var(--text)' }"
+            @click="previewTarget = 'run'"
+          >
+            Preview .nsite.run
+          </button>
+          <button
+            class="border px-3 py-2 text-left text-xs font-bold"
+            :style="previewTarget === 'lol' ? { borderColor: 'var(--text)', background: 'var(--text)', color: 'var(--bg)' } : { borderColor: 'var(--line)', color: 'var(--text)' }"
+            @click="previewTarget = 'lol'"
+          >
+            Preview .nsite.lol
+          </button>
+        </div>
       </div>
     </article>
 
     <article class="surface-card overflow-hidden p-3">
-      <div class="mb-3 flex items-center gap-2 px-1">
-        <span class="h-2.5 w-2.5 rounded-full bg-red-300" />
-        <span class="h-2.5 w-2.5 rounded-full bg-amber-300" />
-        <span class="h-2.5 w-2.5 rounded-full bg-emerald-300" />
-        <div class="ml-2 rounded-full border px-3 py-1 text-xs" :style="{ borderColor: 'var(--line)', color: 'var(--muted)' }">
-          nsite.run gateway preview
-        </div>
+      <div class="mb-3 flex items-center gap-2 border px-3 py-2" :style="{ borderColor: 'var(--line)' }">
+        <span class="h-2.5 w-2.5 rounded-full" :style="{ background: 'var(--muted)' }" />
+        <span class="h-2.5 w-2.5 rounded-full" :style="{ background: 'var(--muted)' }" />
+        <span class="h-2.5 w-2.5 rounded-full" :style="{ background: 'var(--muted)' }" />
+        <span class="ml-2 truncate text-xs" :style="{ color: 'var(--muted)' }">{{ previewUrl }}</span>
       </div>
 
       <iframe
         title="Nostr Boutique Example Nsite"
-        :src="exampleUrl"
+        :src="previewUrl"
         class="h-[68vh] w-full rounded-xl border"
         :style="{ borderColor: 'var(--line)' }"
         loading="lazy"
