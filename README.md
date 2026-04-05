@@ -1,122 +1,93 @@
-# Nuxtstack
+# Nostr Boutique
 
-![](public/nuxtstack-cover.png)
+![](public/screenshot.png)
 
-Similar to [MKStack](https://getstacks.dev/stack/naddr1qvzqqqrhl5pzqprpljlvcnpnw3pejvkkhrc3y6wvmd7vjuad0fg2ud3dky66gaxaqqrk66mnw3skx6c4g6ltw), but build upon [Nuxt](https://nuxt.com/) with [Vue](https://vuejs.org/) and Javascript only (so no React and no Typescript).
+`nostr.boutique` is a landing site for sovereign Nsite storefronts built around the Gamma market flow and Nostr identity.
 
-**Nuxstack provides a Rapid Application Building (RAD) development framework using an AI agent like Goose or Claude Desktop.**
+It explains the model, shows a live example, explores related Nsites, and lets visitors clone the source Nsite either with an existing Nostr signer or by generating a fresh identity.
 
-This is a development boilerplate/starter template specifically designed for rapid prototyping and AI-assisted development workflows. The goal is to build (Nostr) apps and websites in minutes.
+## What This Site Does
 
-## How to start
+- Presents a simple homepage CTA for two paths:
+  - `I have a key`
+  - `I'm new here`
+- Clones the source Nsite rooted at:
+  - `npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6`
+- Shows a live example through `nsite.run` and `nsite.lol`
+- Explains Nostr, Nsites, and gateways for newcomers
+- Discovers related template clones from relay manifests
 
-1. Clone this repository `git clone https://gitlab.com/sebastix-group/nostr/nuxtstack.git`
-2. Install all depencies `npm install`
-3. Start the development server from your CLI in the cloned directory `npm run dev` and the application will be accessible via the browser (follow the instructions on your terminal)
-4. Start your AI agent application (Goose) and point it to the cloned directory
-5. Start prompting, let the AI agent make changes
-6. Optionally, choose a template from https://nuxt.com/templates and tell the AI agent to use this template to apply.
-7. When the template is active, start prompting to make changes and build the application you have in mind.
+## Pages
 
-## 🛠️ Technology Stack
+- `/` - home hero, clone flow, and how-it-works section
+- `/example` - live Nsite preview switcher for both gateways
+- `/explore` - heuristic discovery of related cloned Nsites
+- `/explain` - beginner-friendly explanation of the stack
 
-- **Nuxt**: Progressive Vue.js framework for web applications
-- **Vue.js**: Frontend framework with custom element support enabled
-- **TailwindCSS**: Utility-first CSS framework with Vite plugin
-- **Pinia**: State management for Vue applications
-- **Vite**: Build tool and development server
-- **JavaScript**: Pure JS implementation (no TypeScript)
-- **GSAP**: high class JavaScript animation library
-- **Shaders**: library for building creative WebGPU effects in components
+## Clone Flow
 
-## 🚀 Purpose & Target
+The homepage includes both clone paths:
 
-- **Nostr Application Development**: Build decentralized social applications on the Nostr protocol
-- **AI-Assisted Development**: Extensive tooling for AI agents and automated development workflows
-- **Rapid Prototyping**: Accelerate Nostr app development with pre-configured tooling
+- **Existing Nostr users**
+  - use a NIP-07 signer extension to publish a cloned root manifest
+- **New users**
+  - generate a keypair locally
+  - back up `npub` and `nsec`
+  - publish a profile and cloned root manifest
 
-## 📋 Current State
+The clone logic is adapted from the Gamma-Napp workflow and publishes root Nsite manifests with `muse` attribution.
 
-This is a **fresh starter template** with:
-- Basic application structure (`App.vue`)
-- Footer component template
-- Empty directories ready for:
-  - Pages (used for routing)
-  - Layouts
-  - Components
-  - Nostr web components inside the Components directory
-- Complete build and development pipeline
+## Stack
 
-## 🔧 MCP (Model Context Protocol) Integration
+- Nuxt
+- Vue 3
+- Tailwind CSS
+- Pinia
+- Vite
+- JavaScript
+- nostr-tools
 
-The project includes three configured MCP servers for enhanced AI development:
-- **js-dev**: JavaScript development tools
-- **nostr**: Nostr protocol specific tools  
-- **nuxt**: Nuxt framework specific tools
-
-## ✨ Key Features
-
-1. **Development-Ready**: Complete build pipeline (dev, build, generate, preview)
-2. **Nostr-Focused**: Dedicated tooling and components structure for Nostr development
-3. **AI-Agent Friendly**: Extensive configuration for automated development workflows
-4. **Modern Stack**: Latest versions of Nuxt, TailwindCSS, and supporting tools
-
-## 🚀 Quick Start
+## Development
 
 ```bash
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
+```
 
-# Build for production
-npm run build
+## Production Build
 
-# Generate static site
+```bash
 npm run generate
-
-# Preview production build
-npm run preview
 ```
 
-## 🏗️ Project Structure
+Preview the generated static site:
 
-```
-nuxtstack/
-├── components/           # Vue components
-│   ├── nostr-web-components/  # Nostr-specific components
-│   └── Footer.vue       # Example component
-├── layouts/             # Nuxt layouts (empty - ready for your layouts)
-├── pages/               # File-based routing (empty - ready for your pages)
-├── assets/              # Static assets and styles
-├── public/             # Static files served directly
-├── stores/             # # Pinia stores for state management
-├── .mcp.json           # MCP server configuration for AI tools
-├── nuxt.config.js      # Nuxt configuration
-└── App.vue             # Root application component
+```bash
+npx serve .output/public
 ```
 
-## 🎯 What You Can Build
+## Project Structure
 
-This framework is perfect for building:
-- Decentralized social media clients
-- Nostr-based marketplaces
-- Messaging applications
-- Content publishing platforms
-- Community forums
-- Any application leveraging the Nostr protocol
+```text
+Nostr-Boutique/
+├── assets/
+├── components/
+├── composables/
+├── layouts/
+├── pages/
+├── public/
+├── stores/
+├── App.vue
+├── nuxt.config.js
+└── README.md
+```
 
-## 📚 Resources
+## Notes
 
-- [Nuxt Documentation](https://nuxt.com/)
-- [Nostr Protocol](https://nostr.com/)
-- [TailwindCSS Documentation](https://tailwindcss.com/)
-- [Vue.js Documentation](https://vuejs.org/)
+- Light mode is the default
+- The hero uses separate light/dark background images
+- The Explore page enriches discovered Nsites with kind `0` profile data when available
 
-## 📄 License
+## License
 
 GNU GENERAL PUBLIC LICENSE v3
----
-
-**Ready to build the decentralized web?** Start developing your Nostr application with this modern, AI-friendly framework.
