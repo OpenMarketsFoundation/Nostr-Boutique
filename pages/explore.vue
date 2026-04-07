@@ -41,10 +41,6 @@ const formatTime = (unixTimestamp) => {
   })
 }
 
-const profileInitial = (name = '') => {
-  return (name.trim().charAt(0) || '?').toUpperCase()
-}
-
 onMounted(async () => {
   await refreshSites()
 })
@@ -53,12 +49,7 @@ onMounted(async () => {
 <template>
   <section class="fade-in-up">
     <div class="surface-card p-6 sm:p-8">
-      <span class="pill">Heuristic discovery</span>
       <h1 class="hero-title mt-4 text-4xl font-black leading-tight">Explore Nsites using this template path.</h1>
-      <p class="mt-3 max-w-3xl text-sm sm:text-base" :style="{ color: 'var(--muted)' }">
-        This index scans relay manifests and looks for clone-link signals in <code>muse</code> and <code>thief</code>
-        tags referencing source npub <code>{{ sourceNpub }}</code>.
-      </p>
 
       <div class="mt-5 flex flex-wrap items-center gap-2">
         <button
@@ -92,13 +83,6 @@ onMounted(async () => {
             class="h-10 w-10 rounded-full border object-cover"
             :style="{ borderColor: 'var(--line)' }"
           >
-          <div
-            v-else
-            class="flex h-10 w-10 items-center justify-center rounded-full border text-sm font-black"
-            :style="{ borderColor: 'var(--line)', color: 'var(--muted)' }"
-          >
-            {{ profileInitial(site.profileName) }}
-          </div>
 
           <div class="min-w-0">
             <p class="truncate text-sm font-black">{{ site.profileName }}</p>
@@ -108,30 +92,42 @@ onMounted(async () => {
 
         <div class="flex items-start justify-between gap-3">
           <h2 class="text-lg font-black">{{ site.title }}</h2>
-          <span class="rounded-full px-2 py-1 text-xs font-semibold" :style="{ background: 'var(--line)' }">
-            kind {{ site.kind }}
-          </span>
         </div>
         <p class="mt-1 text-xs" :style="{ color: 'var(--muted)' }">Updated {{ formatDate(site.createdAt) }}</p>
 
         <div class="mt-4 flex flex-wrap gap-2 text-sm">
           <a
+            :href="site.nsiteCloudUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-full border text-base"
+            :style="{ borderColor: 'var(--line)' }"
+            aria-label="Open via nsite.cloud"
+            title="Open via nsite.cloud"
+          >
+            ⛅️
+          </a>
+          <a
             :href="site.nsiteRunUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="rounded-full border px-3 py-1.5 text-xs font-bold uppercase tracking-[0.08em]"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-full border text-base"
             :style="{ borderColor: 'var(--line)' }"
+            aria-label="Open via nsite.run"
+            title="Open via nsite.run"
           >
-            Open via nsite.run
+            🏃
           </a>
           <a
             :href="site.nsiteLolUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="rounded-full border px-3 py-1.5 text-xs font-bold uppercase tracking-[0.08em]"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-full border text-base"
             :style="{ borderColor: 'var(--line)' }"
+            aria-label="Open via nsite.lol"
+            title="Open via nsite.lol"
           >
-            Open via nsite.lol
+            😂
           </a>
         </div>
       </article>

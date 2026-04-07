@@ -1,10 +1,13 @@
 <script setup>
+const exampleCloudUrl = 'https://npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6.nsite.cloud/'
 const exampleRunUrl = 'https://npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6.nsite.run/'
 const exampleLolUrl = 'https://npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6.nsite.lol/'
 const previewTarget = ref('lol')
 
 const previewUrl = computed(() => {
-  return previewTarget.value === 'lol' ? exampleLolUrl : exampleRunUrl
+  if (previewTarget.value === 'cloud') return exampleCloudUrl
+  if (previewTarget.value === 'run') return exampleRunUrl
+  return exampleLolUrl
 })
 
 useSeoMeta({
@@ -33,6 +36,15 @@ useSeoMeta({
           Open live example
         </a>
         <a
+          :href="exampleCloudUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center rounded-full border px-5 py-2.5 text-sm font-bold"
+          :style="{ borderColor: 'var(--line)' }"
+        >
+          Open via nsite.cloud
+        </a>
+        <a
           :href="exampleLolUrl"
           target="_blank"
           rel="noopener noreferrer"
@@ -46,29 +58,6 @@ useSeoMeta({
         </NuxtLink>
       </div>
 
-      <div class="mt-6 panel">
-        <p class="text-xs font-extrabold uppercase tracking-[0.1em]" :style="{ color: 'var(--muted)' }">URL (.nsite.run)</p>
-        <p class="mt-2 break-all text-sm">{{ exampleRunUrl }}</p>
-        <p class="mt-4 text-xs font-extrabold uppercase tracking-[0.1em]" :style="{ color: 'var(--muted)' }">URL (.nsite.lol)</p>
-        <p class="mt-2 break-all text-sm">{{ exampleLolUrl }}</p>
-
-        <div class="mt-4 grid gap-2 sm:grid-cols-2">
-          <button
-            class="border px-3 py-2 text-left text-xs font-bold"
-            :style="previewTarget === 'run' ? { borderColor: 'var(--text)', background: 'var(--text)', color: 'var(--bg)' } : { borderColor: 'var(--line)', color: 'var(--text)' }"
-            @click="previewTarget = 'run'"
-          >
-            Preview .nsite.run
-          </button>
-          <button
-            class="border px-3 py-2 text-left text-xs font-bold"
-            :style="previewTarget === 'lol' ? { borderColor: 'var(--text)', background: 'var(--text)', color: 'var(--bg)' } : { borderColor: 'var(--line)', color: 'var(--text)' }"
-            @click="previewTarget = 'lol'"
-          >
-            Preview .nsite.lol
-          </button>
-        </div>
-      </div>
     </article>
 
     <article class="surface-card overflow-hidden p-3">
@@ -96,7 +85,7 @@ useSeoMeta({
     </article>
     <article class="panel">
       <h2 class="text-base font-black">Works on gateways</h2>
-      <p class="mt-2 text-sm" :style="{ color: 'var(--muted)' }">Accessed through gateway infrastructure so regular browsers can render it.</p>
+      <p class="mt-2 text-sm" :style="{ color: 'var(--muted)' }">Accessed through gateway infrastructure so regular browsers can render it via nsite.cloud, nsite.run, and nsite.lol.</p>
     </article>
     <article class="panel">
       <h2 class="text-base font-black">Template reference</h2>

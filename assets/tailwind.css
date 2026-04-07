@@ -2,7 +2,8 @@
 
 :root {
   color-scheme: light;
-  --bg: #ffffff;
+  --bg: #f3edff;
+  --chrome-bg: #f3edff;
   --bg-soft: #ffffff;
   --text: #0a0a0a;
   --muted: #4a4a4a;
@@ -12,20 +13,23 @@
   --accent: #0a0a0a;
   --surface-tint: #ffffff;
   --card-shadow: none;
+  --menu-active-underline: #5b21b6;
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #050505;
-  --bg-soft: #050505;
+  --bg: #1a1233;
+  --chrome-bg: #1a1233;
+  --bg-soft: #1a1233;
   --text: #f5f5f5;
-  --muted: #b8b8b8;
-  --line: #333333;
+  --muted: #c4b5fd;
+  --line: #3c2d66;
   --brand: #f5f5f5;
   --brand-strong: #f5f5f5;
   --accent: #f5f5f5;
-  --surface-tint: #050505;
+  --surface-tint: #1a1233;
   --card-shadow: none;
+  --menu-active-underline: #c4b5fd;
 }
 
 html,
@@ -98,7 +102,68 @@ a {
 }
 
 .hero-panel {
+  background-color: #ede9fe;
   background-image: url('/Background-Shop.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.deploy-primary-btn {
+  position: relative;
+  isolation: isolate;
+  border: 2px solid transparent;
+  color: #fff;
+  background: linear-gradient(90deg, #7c3aed 0%, #a855f7 100%) padding-box;
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.35);
+}
+
+@property --snake-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.deploy-border-snake::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(
+    90deg,
+    #7c3aed 0%,
+    #a855f7 22%,
+    #ec4899 45%,
+    #d946ef 65%,
+    #a855f7 82%,
+    #7c3aed 100%
+  );
+  background-size: 220% 100%;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+  opacity: 0;
+}
+
+.deploy-border-snake::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.22), rgba(124, 58, 237, 0));
+  filter: blur(8px);
+  z-index: -2;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.deploy-border-snake::before,
+.deploy-border-snake::after {
+  opacity: 1;
+  animation: deploy-border-smooth 4s ease-in-out infinite;
 }
 
 :root[data-theme='dark'] .brand-logo--hero {
@@ -106,7 +171,10 @@ a {
 }
 
 :root[data-theme='dark'] .hero-panel {
+  background-color: #1a1233;
   background-image: url('/Background-Shop-Dark.png');
+  background-size: cover;
+  background-position: center;
   color: #fff;
 }
 
@@ -119,5 +187,29 @@ a {
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+@keyframes deploy-border-smooth {
+  0% {
+    background-position: 0% 50%;
+    box-shadow: 0 6px 18px rgba(124, 58, 237, 0.35);
+  }
+
+  50% {
+    background-position: 100% 50%;
+    box-shadow: 0 8px 22px rgba(192, 38, 211, 0.38);
+  }
+
+  100% {
+    background-position: 0% 50%;
+    box-shadow: 0 6px 18px rgba(124, 58, 237, 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deploy-border-snake::before,
+  .deploy-border-snake::after {
+    animation: none;
   }
 }

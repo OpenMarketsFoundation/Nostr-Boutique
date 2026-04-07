@@ -37,7 +37,7 @@ useSeoMeta({
       <p class="text-xs font-extrabold uppercase tracking-[0.1em]" :style="{ color: 'var(--brand)' }">03</p>
       <h2 class="mt-2 text-xl font-black">Gateway</h2>
       <p class="mt-3 text-sm" :style="{ color: 'var(--muted)' }">
-        A gateway is the web-facing domain that resolves Nsite data into regular HTTP pages, such as <code>*.nsite.run</code> and <code>*.nsite.lol</code>.
+        A gateway is the web-facing domain that resolves Nsite data into regular HTTP pages, such as <code>*.nsite.cloud</code>, <code>*.nsite.run</code>, and <code>*.nsite.lol</code>.
       </p>
     </article>
   </section>

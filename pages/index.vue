@@ -11,25 +11,11 @@ useSeoMeta({
       class="hero-panel relative w-full overflow-hidden bg-cover bg-center px-4 py-8 sm:px-8 sm:py-10"
     >
       <div class="mx-auto max-w-3xl">
-        <div class="flex justify-center">
-          <SiteBrand />
-        </div>
-
-        <div class="mx-auto mt-6 max-w-2xl px-5 py-4 text-center">
-        <p class="text-sm font-bold leading-7 sm:text-base">
-          💳 No credit card or monthly fees!<br>
-          📵 No email address or phone number!<br>
-          ⚡ As close to one-click deploy as possible.<br>
-          🛠️ No technical skills required, but they are always handy.
-        </p>
-          <p class="mt-3 text-base font-bold sm:text-lg">Get started in less than 15 sec.</p>
-        </div>
-
         <NsiteClonePanel />
       </div>
     </div>
 
-    <div class="mx-auto mt-12 w-full max-w-7xl px-2 text-left md:px-4 lg:px-0">
+    <div class="mx-auto mt-8 w-full max-w-7xl px-2 text-left md:px-4 lg:px-0">
       <h2 class="text-center text-2xl font-black sm:text-3xl">How it works</h2>
       <p class="mx-auto mt-2 max-w-2xl text-center text-sm" :style="{ color: 'var(--muted)' }">
         Launch and manage your sovereign storefront with open identity and portable infrastructure.
@@ -62,7 +48,7 @@ useSeoMeta({
           </div>
           <div class="p-4">
             <h3 class="text-base font-black">Open through multiple gateways</h3>
-            <p class="mt-2 text-sm" :style="{ color: 'var(--muted)' }">Accessible via <code>npub*.nsite.lol</code> and <code>npub*.nsite.run</code>.</p>
+            <p class="mt-2 text-sm" :style="{ color: 'var(--muted)' }">Accessible via <code>npub*.nsite.cloud</code>, <code>npub*.nsite.lol</code>, and <code>npub*.nsite.run</code>.</p>
           </div>
         </article>
 
@@ -76,6 +62,31 @@ useSeoMeta({
           </div>
         </article>
       </div>
+    </div>
+
+    <div class="mx-auto mt-8 w-full max-w-7xl px-4 sm:px-0">
+      <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
+        <article class="rounded-2xl border px-4 py-4 text-center" :style="{ borderColor: 'var(--line)', background: 'var(--bg-soft)' }">
+          <p class="text-2xl">💳</p>
+          <p class="mt-2 text-sm font-bold leading-6">No credit card or monthly fees!</p>
+        </article>
+
+        <article class="rounded-2xl border px-4 py-4 text-center" :style="{ borderColor: 'var(--line)', background: 'var(--bg-soft)' }">
+          <p class="text-2xl">📵</p>
+          <p class="mt-2 text-sm font-bold leading-6">No email address or phone number!</p>
+        </article>
+
+        <article class="rounded-2xl border px-4 py-4 text-center" :style="{ borderColor: 'var(--line)', background: 'var(--bg-soft)' }">
+          <p class="text-2xl">⚡</p>
+          <p class="mt-2 text-sm font-bold leading-6">As close to one-click deploy as possible.</p>
+        </article>
+
+        <article class="rounded-2xl border px-4 py-4 text-center" :style="{ borderColor: 'var(--line)', background: 'var(--bg-soft)' }">
+          <p class="text-2xl">🛠️</p>
+          <p class="mt-2 text-sm font-bold leading-6">No technical skills required.</p>
+        </article>
+      </div>
+
     </div>
   </section>
 </template>

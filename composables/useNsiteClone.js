@@ -39,8 +39,19 @@ const stripNamedSiteTags = (tags) => {
   return tags.filter((tag) => tag[0] !== 'd' && tag[0] !== 'name')
 }
 
+const stripCloneTrailTags = (tags) => {
+  return tags.filter((tag) => !['muse', 'thief', 'source'].includes(tag[0]))
+}
+
+const toSiteKey = ({ sourceManifest, namedSiteKey }) => {
+  if (namedSiteKey && namedSiteKey.trim()) return namedSiteKey.trim()
+  const dTag = (sourceManifest?.tags || []).find((tag) => tag[0] === 'd')
+  if (dTag?.[1]) return dTag[1]
+  return ''
+}
+
 export const buildRootCloneManifestTemplate = ({ sourceManifest, sourcePubkey, relays }) => {
-  const baseTags = stripNamedSiteTags((sourceManifest?.tags || []).map((tag) => [...tag]))
+  const baseTags = stripCloneTrailTags(stripNamedSiteTags((sourceManifest?.tags || []).map((tag) => [...tag])))
   const relayTags = uniq([
     ...parseRelaysFromManifest(sourceManifest),
     ...(relays || [])
@@ -60,6 +71,55 @@ export const buildRootCloneManifestTemplate = ({ sourceManifest, sourcePubkey, r
   }
 }
 
+export const buildNamedCloneManifestTemplate = ({ sourceManifest, sourcePubkey, relays, namedSiteKey = '' }) => {
+  const siteKey = toSiteKey({ sourceManifest, namedSiteKey })
+  if (!siteKey) throw new Error('Named clone requires a site key (d tag).')
+
+  const cleanedTags = stripCloneTrailTags((sourceManifest?.tags || []).map((tag) => [...tag]))
+  const relayTags = uniq([
+    ...parseRelaysFromManifest(sourceManifest),
+    ...(relays || [])
+  ]).map((relay) => ['relay', relay])
+
+  const nonRelayTags = cleanedTags.filter((tag) => !['relay', 'r', 'd', 'name'].includes(tag[0]))
+
+  return {
+    kind: 35128,
+    created_at: Math.floor(Date.now() / 1000),
+    tags: [
+      ['d', siteKey],
+      ['name', siteKey],
+      ...nonRelayTags,
+      ...relayTags,
+      ['muse', sourcePubkey, ...uniq(relays || []).slice(0, 3)]
+    ],
+    content: sourceManifest?.content || ''
+  }
+}
+
+export const buildCloneManifestTemplate = ({
+  sourceManifest,
+  sourcePubkey,
+  relays,
+  cloneAs = 'root',
+  namedSiteKey = ''
+}) => {
+  if (cloneAs === 'named') {
+    return buildNamedCloneManifestTemplate({
+      sourceManifest,
+      sourcePubkey,
+      relays,
+      namedSiteKey
+    })
+  }
+
+  return buildRootCloneManifestTemplate({
+    sourceManifest,
+    sourcePubkey,
+    relays
+  })
+}
+
 export const useNsiteClone = () => {
   const pool = new SimplePool()
 
@@ -74,14 +134,27 @@ export const useNsiteClone = () => {
     }
   }
 
-  const fetchSourceManifest = async ({ sourceNpub = DEFAULT_SOURCE_NPUB, relays = DEFAULT_RELAYS }) => {
+  const fetchSourceManifest = async ({
+    sourceNpub = DEFAULT_SOURCE_NPUB,
+    relays = DEFAULT_RELAYS,
+    siteType = 'auto',
+    namedSiteKey = ''
+  }) => {
     const sourcePubkey = decodeNpub(sourceNpub)
 
-    const events = await pool.querySync(relays, {
+    const filter = {
       kinds: [15128, 35128],
       authors: [sourcePubkey],
       limit: 30
-    })
+    }
+
+    if (siteType === 'root') filter.kinds = [15128]
+    if (siteType === 'named') {
+      filter.kinds = [35128]
+      if (namedSiteKey && namedSiteKey.trim()) filter['#d'] = [namedSiteKey.trim()]
+    }
+
+    const events = await pool.querySync(relays, filter)
 
     const latest = [...events].sort((a, b) => b.created_at - a.created_at)[0]
     if (!latest) throw new Error('No source nsite manifest found on selected relays.')
@@ -112,8 +185,21 @@ export const useNsiteClone = () => {
     return event
   }
 
-  const publishClonedManifest = async ({ identity, sourceManifest, sourcePubkey, relays }) => {
-    const template = buildRootCloneManifestTemplate({ sourceManifest, sourcePubkey, relays })
+  const publishClonedManifest = async ({
+    identity,
+    sourceManifest,
+    sourcePubkey,
+    relays,
+    cloneAs = 'root',
+    namedSiteKey = ''
+  }) => {
+    const template = buildCloneManifestTemplate({
+      sourceManifest,
+      sourcePubkey,
+      relays,
+      cloneAs,
+      namedSiteKey
+    })
     const event = finalizeEvent(template, identity.secretKey)
 
     const pubs = pool.publish(relays, event)
@@ -121,7 +207,13 @@ export const useNsiteClone = () => {
     return event
   }
 
-  const publishClonedManifestWithExtension = async ({ sourceManifest, sourcePubkey, relays }) => {
+  const publishClonedManifestWithExtension = async ({
+    sourceManifest,
+    sourcePubkey,
+    relays,
+    cloneAs = 'root',
+    namedSiteKey = ''
+  }) => {
     if (!process.client || !window.nostr) {
       throw new Error('No Nostr signer found. Please install a NIP-07 extension.')
     }
@@ -131,7 +223,13 @@ export const useNsiteClone = () => {
     }
 
     const pubkey = await window.nostr.getPublicKey()
-    const template = buildRootCloneManifestTemplate({ sourceManifest, sourcePubkey, relays })
+    const template = buildCloneManifestTemplate({
+      sourceManifest,
+      sourcePubkey,
+      relays,
+      cloneAs,
+      namedSiteKey
+    })
     const unsignedEvent = {
       ...template,
       pubkey

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "gamma-root",
+    "title": "Gamma Root Store",
+    "description": "Root nsite template clone.",
+    "npub": "npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6",
+    "cloneAs": "root"
+  },
+  {
+    "id": "gamma-named",
+    "title": "Gamma Named Theme",
+    "description": "Named nsite clone example. Update d to match your manifest key.",
+    "npub": "npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6",
+    "cloneAs": "named",
+    "d": "shop"
+  }
+]
