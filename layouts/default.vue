@@ -26,7 +26,7 @@ const isActive = (path) => route.path === path
 <template>
   <div class="site-shell flex min-h-screen flex-col">
     <header class="border-b" :style="{ borderColor: 'var(--line)', background: 'var(--chrome-bg)' }">
-      <div class="mx-auto w-full max-w-6xl px-4 py-4 sm:px-6">
+      <div class="mx-auto w-full max-w-6xl px-4 pt-3.5 pb-2.5 sm:px-6">
         <div class="flex items-center justify-between gap-3">
           <SiteBrand compact />
 

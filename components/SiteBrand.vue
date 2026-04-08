@@ -6,9 +6,14 @@ const props = defineProps({
   }
 })
 
-const logoSrc = ref('/Nostr-Boutique-Logo.png')
+const logoSrc = ref('/Logo.png')
 
 const handleLogoError = () => {
+  if (logoSrc.value === '/Logo.png') {
+    logoSrc.value = '/Nostr-Boutique-Logo.png'
+    return
+  }
+
   if (logoSrc.value === '/Nostr-Boutique-Logo.png') {
     logoSrc.value = '/nostr-boutique-logo.svg'
     return
@@ -24,7 +29,7 @@ const handleLogoError = () => {
       v-if="logoSrc"
       :src="logoSrc"
       alt="Nostr Boutique"
-      :class="props.compact ? 'brand-logo brand-logo--invert h-9 w-auto' : 'brand-logo brand-logo--hero h-28 w-auto'"
+      :class="props.compact ? 'brand-logo brand-logo--invert h-11 w-auto' : 'brand-logo brand-logo--hero h-30 w-auto'"
       @error="handleLogoError"
     >
     <div v-else class="inline-flex flex-col leading-none">
