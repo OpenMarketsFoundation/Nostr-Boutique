@@ -98,6 +98,17 @@ onMounted(async () => {
 
         <div class="flex items-start justify-between gap-3">
           <h2 v-if="site.title && site.title !== 'Unnamed Nsite'" class="text-lg font-black">{{ site.title }}</h2>
+          <span
+            v-if="site.sourceLabel"
+            class="inline-flex items-center rounded-full border px-2 py-1 text-[11px] font-bold uppercase tracking-[0.08em]"
+            :style="{
+              borderColor: site.sourceLabel === 'New' ? 'rgba(16,185,129,0.45)' : 'rgba(245,158,11,0.45)',
+              backgroundColor: site.sourceLabel === 'New' ? 'rgba(16,185,129,0.12)' : 'rgba(245,158,11,0.12)',
+              color: site.sourceLabel === 'New' ? '#065f46' : '#92400e'
+            }"
+          >
+            {{ site.sourceLabel }}
+          </span>
         </div>
         <p class="mt-1 text-xs" :style="{ color: 'var(--muted)' }">Updated {{ formatDate(site.createdAt) }}</p>
 

@@ -1,10 +1,18 @@
 import { SimplePool } from 'nostr-tools/pool'
 import * as nip19 from 'nostr-tools/nip19'
 
-const SOURCE_NPUBS = [
-  'npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6',
-  'npub1000000k94d2xgnfdyqkvvgmc4x2d798y67k2llk4szq7jarqhz2s540a03'
+const SOURCE_TEMPLATES = [
+  {
+    label: 'Old',
+    npub: 'npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6'
+  },
+  {
+    label: 'New',
+    npub: 'npub1000000k94d2xgnfdyqkvvgmc4x2d798y67k2llk4szq7jarqhz2s540a03'
+  }
 ]
+
+const SOURCE_NPUBS = SOURCE_TEMPLATES.map((item) => item.npub)
 
 const DEFAULT_RELAYS = [
   'wss://relay.ditto.pub',
@@ -75,7 +83,22 @@ const toProfileMap = async ({ pool, relays, pubkeys }) => {
 
 export const useNsiteExplore = () => {
   const pool = new SimplePool()
-  const sourcePubkeys = SOURCE_NPUBS.map((npub) => nip19.decode(npub).data)
+  const sourceByPubkey = new Map(
+    SOURCE_TEMPLATES.map((item) => [nip19.decode(item.npub).data, item])
+  )
+  const sourcePubkeys = Array.from(sourceByPubkey.keys())
+
+  const sourceMatchForEvent = (event) => {
+    const tags = event.tags || []
+    for (const tag of tags) {
+      if (!['muse', 'thief'].includes(tag[0])) continue
+      for (const cell of tag) {
+        const source = sourceByPubkey.get(String(cell).toLowerCase())
+        if (source) return source
+      }
+    }
+    return null
+  }
 
   const fetchTemplateSites = async (limit = 250, relays = DEFAULT_RELAYS) => {
     const events = await pool.querySync(relays, {
@@ -83,13 +106,9 @@ export const useNsiteExplore = () => {
       limit
     })
 
-    const related = events.filter((event) => {
-      const tags = event.tags || []
-      return tags.some((tag) => {
-        if (!['muse', 'thief'].includes(tag[0])) return false
-        return tag.some((cell) => sourcePubkeys.includes(String(cell).toLowerCase()))
-      })
-    })
+    const related = events
+      .filter((event) => sourceMatchForEvent(event) !== null)
+      .filter((event) => event.kind === 15128)
 
     const deduped = new Map()
     for (const event of related) {
@@ -116,6 +135,7 @@ export const useNsiteExplore = () => {
           pubkey: event.pubkey,
           npub,
           npubShort: shortNpub(npub),
+          sourceLabel: sourceMatchForEvent(event)?.label || '',
           title: toSiteTitle(event),
           profileName: toProfileName(profile, npub),
           profileImage: profile.picture || '',
