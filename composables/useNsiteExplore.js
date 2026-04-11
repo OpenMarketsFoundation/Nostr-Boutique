@@ -143,7 +143,8 @@ export const useNsiteExplore = () => {
           createdAt: event.created_at,
           nsiteCloudUrl: `https://${npub}.nsite.cloud`,
           nsiteRunUrl: `https://${npub}.nsite.run`,
-          nsiteLolUrl: `https://${npub}.nsite.lol`
+          nsiteLolUrl: `https://${npub}.nsite.lol`,
+          nsiteBoutiqueUrl: `https://${npub}.nsite.boutique`
         }
       })
   }

@@ -150,6 +150,17 @@ onMounted(async () => {
           >
             😂
           </a>
+          <a
+            :href="site.nsiteBoutiqueUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-full border text-base"
+            :style="{ borderColor: 'var(--line)' }"
+            aria-label="Open via nsite.boutique"
+            title="Open via nsite.boutique"
+          >
+            🛍️
+          </a>
         </div>
       </article>
     </div>

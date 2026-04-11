@@ -2,6 +2,7 @@
 const exampleCloudUrl = 'https://npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6.nsite.cloud/'
 const exampleRunUrl = 'https://npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6.nsite.run/'
 const exampleLolUrl = 'https://npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6.nsite.lol/'
+const exampleBoutiqueUrl = 'https://npub1equrmqway3qxw3dkssymusxkwgwrqypfgeqx0lx9pgjam7gnj4ysaqhkj6.nsite.boutique/'
 const examplePortalCloudUrl = 'https://npub1jegt4wpzxlwzy6p35767vjk5qxqw7udw0zl2z9frz4tku67qwfrsf2altc.nsite.cloud/'
 
 const previewUrl = ref(examplePortalCloudUrl)
@@ -59,6 +60,15 @@ useSeoMeta({
         >
           Open via nsite.lol
         </a>
+        <a
+          :href="exampleBoutiqueUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center rounded-full border px-5 py-2.5 text-sm font-bold"
+          :style="{ borderColor: 'var(--line)' }"
+        >
+          Open via nsite.boutique 🛍️
+        </a>
         <NuxtLink to="/explore" class="inline-flex items-center justify-center rounded-full border px-5 py-2.5 text-sm font-bold" :style="{ borderColor: 'var(--line)' }">
           Explore related Nsites
         </NuxtLink>
@@ -93,7 +103,7 @@ useSeoMeta({
     </article>
     <article class="panel">
       <h2 class="text-base font-black">Works on gateways</h2>
-      <p class="mt-2 text-sm" :style="{ color: 'var(--muted)' }">Accessed through gateway infrastructure so regular browsers can render it via nsite.cloud, nsite.run, and nsite.lol.</p>
+      <p class="mt-2 text-sm" :style="{ color: 'var(--muted)' }">Accessed through gateway infrastructure so regular browsers can render it via nsite.cloud, nsite.run, nsite.lol, and nsite.boutique 🛍️.</p>
     </article>
     <article class="panel">
       <h2 class="text-base font-black">Template reference</h2>
