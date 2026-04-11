@@ -1,0 +1,14 @@
+{
+  "names": {
+    "_": "7bdef7bec5ab54644d2d202cc62378a994df14e4d7acaffed58081e97460b895",
+    "1000": "7bdef7bec5ab54644d2d202cc62378a994df14e4d7acaffed58081e97460b895"
+  },
+  "relays": {
+    "7bdef7bec5ab54644d2d202cc62378a994df14e4d7acaffed58081e97460b895": [
+      "wss://relay.ditto.pub",
+      "wss://relay.damus.io",
+      "wss://relay.primal.net",
+      "wss://nos.lol"
+    ]
+  }
+}
